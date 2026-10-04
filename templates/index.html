@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Predictive Maintainance</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .button-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 35px;
+            border: none;
+            border-radius: 6px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            background: #e9f7ef;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Predictive Maintainance</h1>
+
+    <form action="/predict" method="POST">
+
+        <div class="form-grid">
+
+            <!-- ID 
+            <div class="form-group">
+                <label for="id">Customer ID</label>
+                <input type="text" id="id" name="id" required>
+            </div>-->
+
+            <!-- Air Temperature -->
+            <div class="form-group">
+                <label for="Air_temperature_K">Air temperature [K]</label>
+                <input type="number" step="0.01"id="Air_temperature_K" name="Air_temperature_K" required>
+            </div>
+
+        <!-- Process Temperature -->
+            <div class="form-group">
+                <label for="Process_temperature_K">Process temperature [K]</label>
+                <input type="number"
+                    step="0.01"
+                    id="Process_temperature_K"
+                    name="Process_temperature_K"
+                    required>
+            </div>
+
+            <!-- Rotational Speed -->
+            <div class="form-group">
+                <label for="Rotational_speed_rpm">Rotational speed [rpm]</label>
+                <input type="number"
+                    step="1"
+                    id="Rotational_speed_rpm"
+                    name="Rotational_speed_rpm"
+                    required>
+            </div>
+
+            <!-- Torque -->
+            <div class="form-group">
+                <label for="Torque_Nm">Torque [Nm]</label>
+                <input type="number"
+                    step="0.01"
+                    id="Torque_Nm"
+                    name="Torque_Nm"
+                    required>
+            </div>
+
+            <!-- Tool Wear -->
+            <div class="form-group">
+                <label for="Tool_wear_min">Tool wear [min]</label>
+                <input type="number"
+                    step="1"
+                    id="Tool_wear_min"
+                    name="Tool_wear_min"
+                    required>
+            </div>
+
+            <!-- Machine Failure -->
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select id="type"
+                        name="type"
+                        required>
+                    <option value="L">L</option>
+                    <option value="M">M</option>
+                    <option value="H">H</option>
+                </select>
+            </div>
+
+            <!-- TWF -->
+            <div class="form-group">
+                <label for="TWF">TWF</label>
+                <select id="TWF" name="TWF" required>
+                    <option value="">Select</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <!-- HDF -->
+            <div class="form-group">
+                <label for="HDF">HDF</label>
+                <select id="HDF" name="HDF" required>
+                    <option value="">Select</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <!-- PWF -->
+            <div class="form-group">
+                <label for="PWF">PWF</label>
+                <select id="PWF" name="PWF" required>
+                    <option value="">Select</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <!-- OSF -->
+            <div class="form-group">
+                <label for="OSF">OSF</label>
+                <select id="OSF" name="OSF" required>
+                    <option value="">Select</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <!-- RNF -->
+            <div class="form-group">
+                <label for="RNF">RNF</label>
+                <select id="RNF" name="RNF" required>
+                    <option value="">Select</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <div class="button-container">
+                <button type="submit">Predict Machine Condition</button>
+            </div>
+        </div>
+    </form>
+
+    {% if prediction %}
+        <div class="result">
+            Prediction: {{ prediction }}
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
