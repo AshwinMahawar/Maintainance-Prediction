@@ -5,6 +5,7 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from feature.feature import feature_engineering
 import joblib
+import os
 
 # from sklearn.utils.class_weight import compute_class_weight
 model = joblib.load("model.h5")
@@ -50,4 +51,5 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port, debug=False)
